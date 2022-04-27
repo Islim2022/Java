@@ -12,7 +12,6 @@ public class Puzzlejava {
         for (int i = 1; i <=10; i++) {
             randomNumbers.add(randMachine.nextInt(20) + 1);
         }
-
         return randomNumbers;
     }
 
@@ -23,9 +22,9 @@ public class Puzzlejava {
 
         Random randMachine = new Random();
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        char randomChar = alphabet.charAt(randMachine.nextInt(26));
+        char randomLetter = alphabet.charAt(randMachine.nextInt(26));
 
-        return String.valueOf(randomChar);
+        return String.valueOf(randomLetter);
     }
 
     // 3. generatePassword
