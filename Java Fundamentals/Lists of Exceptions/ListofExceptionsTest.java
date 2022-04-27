@@ -1,11 +1,8 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class ListofExceptionsTest{
     public static void main(String[] args){
-
-    ListofExceptions testObj = new ListofExceptions();
-
-    System.out.println(testObj.makeList());
-
+        ListofExceptions Test = new ListofExceptions();
+        Test.myList();
     }
 }

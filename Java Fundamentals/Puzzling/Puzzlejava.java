@@ -17,6 +17,10 @@ public class Puzzlejava {
 
     // 2. getRandomLetter
     // Create an array within the method that contains all 26 letters of the alphabet (this array must have 26 values).
+    public String getRandomLetter(){
+        Random rand = new Random();
+        String alphabe
+    }
 
     public String getRandomLetter() {
 
