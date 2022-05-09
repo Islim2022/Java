@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style2.css">
 	<script type="text/javascript" src="js/Time.js"></script>
 </head>
 <body>
