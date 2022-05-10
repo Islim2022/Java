@@ -29,7 +29,7 @@
             </div>
             <div class="form">
                 <h2>Cave</h2>
-                <p>(Earns 10 - 20 golds)</p>
+                <p>(Earns 5 - 10 golds)</p>
                 <form action="/process_gold" method="POST">
                 <input type="hidden" name="form" value="cave" />
                 <button type="submit" class="btn btn-warning">Find Gold!</button>
@@ -37,7 +37,7 @@
             </div>
             <div class="form">
                 <h2>House</h2>
-                <p>(Earns 10 - 20 golds)</p>
+                <p>(Earns 2 - 5 golds)</p>
                 <form action="/process_gold" method="POST">
                 <input type="hidden" name="form" value="house" />
                 <button type="submit" class="btn btn-warning">Find Gold!</button>

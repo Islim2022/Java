@@ -40,7 +40,7 @@ public class ninjaGoldProcess {
 			activities.add(activity);
 		
 		} else if(form.equals("cave")) {
-			int gold = random.nextInt(21 - 10) + 10;
+			int gold = random.nextInt(11 - 5) + 5;
 			int currentGold = (int) session.getAttribute("gold");
 			session.setAttribute("gold", currentGold + gold);
 			
@@ -48,7 +48,7 @@ public class ninjaGoldProcess {
 			activities.add(activity);
 					
 		} else if(form.equals("house")) {
-			int gold = random.nextInt(21 - 10) + 10;
+			int gold = random.nextInt(6 - 2) + 2;
 			int currentGold = (int) session.getAttribute("gold");
 			session.setAttribute("gold", currentGold + gold);
 			
