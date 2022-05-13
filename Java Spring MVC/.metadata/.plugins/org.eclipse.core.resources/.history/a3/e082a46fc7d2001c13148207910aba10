@@ -1,0 +1,16 @@
+package com.HaneiIslim.MVC.services;
+
+import org.springframework.stereotype.Service;
+
+import com.HaneiIslim.MVC.repositories.BookRepository;
+
+@Service 
+public class BookService {
+    // adding the book repository as a dependency
+    private final BookRepository bookRepo;
+    
+    public BookService(BookRepository bookRepository) {
+        this.bookRepo = bookRepository;
+    }
+
+}
