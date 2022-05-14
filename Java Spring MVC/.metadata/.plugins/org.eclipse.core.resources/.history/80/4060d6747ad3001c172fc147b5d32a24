@@ -1,0 +1,31 @@
+package com.HaneiIslim.SaveTravels.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.HaneiIslim.SaveTravels.models.Expense;
+import com.HaneiIslim.SaveTravels.services.ExpenseService;
+
+@Controller
+public class ExpenseController {
+	
+    private final ExpenseService ExpenseService;
+    public ExpenseController(ExpenseService ExpenseService){
+        this.ExpenseService = ExpenseService;
+    }
+    
+    @RequestMapping("/")
+    public String show() {
+    	return "show.jsp";
+    }
+    
+    @RequestMapping("/expenses/{id}")
+    public String show2(@PathVariable("id") Long id, Model model) {
+    	Expense expense = ExpenseService.findExpense(id);
+    	model.addAttribute("expense", expense);
+    	return "show.jsp";
+    }
+
+}

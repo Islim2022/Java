@@ -1,0 +1,57 @@
+package com.HaneiIslim.SaveTravels.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.HaneiIslim.SaveTravels.models.Expense;
+import com.HaneiIslim.SaveTravel.repositories.ExpenseRepository;
+
+@Service 
+public class ExpenseService {
+    // adding the book repository as a dependency
+    private final ExpenseRepository expenseRepo;
+    
+    public ExpenseService(ExpenseRepository bookRepo) {
+        this.expenseRepo = bookRepo;
+    }
+    
+    // returns all the books
+    public List<Expense> allBooks() {
+        return expenseRepo.findAll();
+    }
+    // creates a book
+    public Expense createBook(Expense b) {
+        return expenseRepo.save(b);
+    }
+    // retrieves a book
+    public Expense findBook(Long id) {
+        Optional<Expense> optionalExpense = expenseRepo.findById(id);
+        if(optionalExpense.isPresent()) {
+            return optionalExpense.get();
+        } else {
+            return null;
+        }
+    }
+    
+//    public Expense updateExpense(Long id, String title, String description, String vendor, double price) {
+//    	Optional<Expense> optionalExpense = expenseRepo.findById(id);
+//        if(optionalExpense.isPresent()) {
+//            Expense expense = optionalExpense.get();
+//            expense.setTitle(title);
+//            expense.setDescription(description);
+//            expense.setVendor(vendor);
+//            expense.setAmount(price);
+//            expenseRepo.save(expense);
+//            return expense;
+//        } else {
+//            return null;
+//        }
+//    }
+//    
+//    public void deleteExpense(Long id) {
+//    	expenseRepo.deleteById(id);
+//    }
+
+}
