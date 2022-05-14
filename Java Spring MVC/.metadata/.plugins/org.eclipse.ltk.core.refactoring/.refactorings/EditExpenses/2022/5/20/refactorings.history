@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;EditExpenses/src/main/webapp/Index.jsp&apos; to &apos;WEB-INF&apos;" description="Rename resource &apos;Index.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/Index.jsp" name="WEB-INF" stamp="1652559744359" updateReferences="true"/>
+</session>
