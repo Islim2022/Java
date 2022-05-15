@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;com.HaneiIslim.CareSoft.ClinicApp.AdminUser.role&apos; in &apos;com.HaneiIslim.CareSoft.ClinicApp.AdminUser&apos;&#x0D;&#x0A;- Original project: &apos;CareSoft&apos;&#x0D;&#x0A;- Original element: &apos;com.HaneiIslim.CareSoft.ClinicApp.AdminUser.role&apos;&#x0D;&#x0A;- Getter method name: &apos;getRole&apos;&#x0D;&#x0A;- Setter method name: &apos;setRole&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;role&apos;" flags="589830" getter="getRole" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;com.HaneiIslim.CareSoft.ClinicApp{AdminUser.java[AdminUser^role" insertion="6" setter="setRole" stamp="1652600398074" version="1.0" visibility="1"/>
+</session>
