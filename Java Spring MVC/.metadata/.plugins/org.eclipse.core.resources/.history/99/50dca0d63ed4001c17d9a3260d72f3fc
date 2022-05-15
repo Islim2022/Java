@@ -1,0 +1,57 @@
+package com.HaneiIslim.Languages.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.HaneiIslim.Languages.models.language;
+import com.HaneiIslim.Languages.repositories.languageRepository;
+
+@Service 
+public class languageService {
+    // adding the expense repository as a dependency
+    private final languageRepository languageRepo;
+    
+    public languageService(languageRepository languageRepo) {
+        this.languageRepo = languageRepo;
+    }
+    
+    // returns all the expenses
+    public List<Language> allExpenses() {
+        return languageRepo.findAll();
+    }
+    // creates an expense
+    public Language createExpense(language l) {
+        return languageRepo.save(l);
+    }
+    // retrieves an expense
+    public Expense findExpense(Long id) {
+        Optional<Expense> optionalExpense = expenseRepo.findById(id);
+        if(optionalExpense.isPresent()) {
+            return optionalExpense.get();
+        } else {
+            return null;
+        }
+    }
+    
+    public Expense updateExpense(Long id, String exp, String description, String vendor, double price) {
+    	Optional<Expense> optionalExpense = expenseRepo.findById(id);
+        if(optionalExpense.isPresent()) {
+            Expense expense = optionalExpense.get();
+            expense.setExpense(exp);
+            expense.setDescription(description);
+            expense.setVendor(vendor);
+            expense.setAmount(price);
+            expenseRepo.save(expense);
+            return expense;
+        } else {
+            return null;
+        }
+    }
+    
+    public void deleteExpense(Long id) {
+    	expenseRepo.deleteById(id);
+    }
+
+}

@@ -1,0 +1,51 @@
+package com.HaneiIslim.Languages.controllers;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.HaneiIslim.Languages.models.language;
+import com.HaneiIslim.Languages.services.languageService;
+
+@Controller
+public class languageController {
+	
+    private final languageService languageService;
+    public languageController(languageService languageService){
+        this.languageService = languageService;
+    }
+    
+    
+    @GetMapping("/languages")
+    public String allLanguages(@ModelAttribute("language") language language, Model model) {
+        List<language>languages = languageService.allLanguages();
+        model.addAttribute("languages", languages);
+    return "Index.jsp";
+    }
+    
+    @PostMapping("/languages")
+    public String createLanguage(@Valid @ModelAttribute("language") language language, BindingResult result) {
+        if (result.hasErrors()) {
+            return "Index.jsp";
+        } else {
+            languageService.createLanguage(language);
+            return "redirect:/languages";
+        }
+    }
+    
+    @GetMapping("/expenses/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
+    	Expense expense = ExpenseService.findExpense(id);
+    	model.addAttribute("Expense", expense);
+    	return "Edit.jsp";
+    }
+
+}
