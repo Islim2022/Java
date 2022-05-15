@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+D:\Desktop\Axsos\Java\Java OOP\Advanced OOP\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+2277976078.index
+947703665.index
