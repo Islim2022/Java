@@ -1,0 +1,56 @@
+package com.HaneiIslim.dojosAndNinjas.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.HaneiIslim.dojosAndNinjas.models.Ninjas;
+import com.HaneiIslim.dojosAndNinjas.repositories.dojosAndNinjasRepository;
+
+@Service 
+public class dojosAndNinjasService {
+    // adding the Language repository as a dependency
+    private final dojosAndNinjasRepository dojosAndNinjasRepo;
+    
+    public dojosAndNinjasService(dojosAndNinjasRepository dojosAndNinjasRepo) {
+        this.dojosAndNinjasRepo = dojosAndNinjasRepo;
+    }
+    
+    // returns all the Ninjas
+    public List<Ninjas> allNinjas() {
+        return dojosAndNinjasRepo.findAll();
+    
+    // creates a Ninja
+    public Ninjas createNinja(Ninjas ninja) {
+        return dojosAndNinjasRepo.save(ninja);
+    }
+    // retrieves a Ninja
+    public Ninjas findNinja(Long id) {
+        Optional<Ninjas> optionalNinja = dojosAndNinjasRepo.findById(id);
+        if(optionalNinja.isPresent()) {
+            return optionalNinja.get();
+        } else {
+            return null;
+        }
+    }
+    
+    public language updateLanguage(language lang) {
+    	Optional<language> optionalLanguage = languageRepo.findById(lang.getId());
+        if(optionalLanguage.isPresent()) {
+        	language language = optionalLanguage.get();
+        	language.setName(lang.getName());
+        	language.setCreator(lang.getCreator());
+        	language.setVersion(lang.getVersion());
+        	languageRepo.save(language);
+            return language;
+        } else {
+            return null;
+        }
+    }
+    
+    public void deleteLanguage(Long id) {
+    	languageRepo.deleteById(id);
+    }
+
+}

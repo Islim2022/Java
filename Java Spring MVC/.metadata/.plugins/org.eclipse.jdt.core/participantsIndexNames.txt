@@ -7,3 +7,5 @@ D:\Desktop\Axsos\Java\Java Spring MVC\.metadata\.plugins\org.eclipse.jst.jsp.cor
 \Languages\src\main\java
 D:\Desktop\Axsos\Java\Java Spring MVC\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1305265460.index
 \RenderingBooks\src\main\java
+D:\Desktop\Axsos\Java\Java Spring MVC\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\474972654.index
+\dojosAndNinjas\src\main\java

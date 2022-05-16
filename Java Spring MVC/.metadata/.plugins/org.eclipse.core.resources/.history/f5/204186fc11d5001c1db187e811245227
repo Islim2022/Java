@@ -1,0 +1,21 @@
+package com.HaneiIslim.dojosAndNinjas.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.HaneiIslim.dojosAndNinjas.services.dojosAndNinjasService;
+
+@Controller
+public class MainController {
+	
+    private final dojosAndNinjasService dojosAndNinjasService;
+    public MainController(dojosAndNinjasService dojosAndNinjasService){
+        this.dojosAndNinjasService = dojosAndNinjasService;
+    }
+    
+    @GetMapping("/")
+    public String index() {
+    	return "redirect:/dojos";
+    }
+
+}

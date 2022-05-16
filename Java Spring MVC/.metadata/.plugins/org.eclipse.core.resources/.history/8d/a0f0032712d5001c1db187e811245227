@@ -1,0 +1,33 @@
+package com.HaneiIslim.dojosAndNinjas.controllers;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.HaneiIslim.dojosAndNinjas.models.Dojos;
+import com.HaneiIslim.dojosAndNinjas.services.dojosAndNinjasService;
+
+@Controller
+public class MainController {
+	
+    private final dojosAndNinjasService dojosAndNinjasService;
+    public MainController(dojosAndNinjasService dojosAndNinjasService){
+        this.dojosAndNinjasService = dojosAndNinjasService;
+    }
+    
+    @GetMapping("/")
+    public String index() {
+    	return "redirect:/dojos";
+    }
+    
+    @GetMapping("/dojos")
+    public String dojos(@ModelAttribute("dojo") Dojos Dojo, Model model) {
+    	List<Dojos> Dojo = dojosAndNinjasService.allDojos();
+    	model.addAttribute("dojos", Dojo);
+    	
+    }
+
+}
