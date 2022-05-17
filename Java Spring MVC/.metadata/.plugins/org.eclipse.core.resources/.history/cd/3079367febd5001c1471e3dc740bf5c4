@@ -1,0 +1,35 @@
+package com.HaneiIslim.ProductsAndCatogories.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.HaneiIslim.ProductsAndCatogories.models.Category;
+import com.HaneiIslim.ProductsAndCatogories.models.Product;
+import com.HaneiIslim.ProductsAndCatogories.repositories.ProductRepository;
+
+@Service
+public class ProductService {
+	
+	private final ProductRepository productRepo;
+	
+	public ProductService(ProductRepository productRepo) {
+		this.productRepo=productRepo;	
+	}
+	public List<Product> getAllCategories(){
+		return productRepo.findAll();
+	}
+	public Product createProduct(Product product) {
+		this.productRepo.save(product);
+		return product;
+	}
+	public Product findProduct(Long id) {
+		Optional<Product> product= this.productRepo.findById(id);
+		return product.get();
+	}
+	
+	public Product updateProduct(Product p) {
+		return this.productRepository.save(p);
+	}
+}

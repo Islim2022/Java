@@ -1,0 +1,77 @@
+package com.HaneiIslim.ProductsAndCatogories.controllers;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.HaneiIslim.ProductsAndCatogories.models.Category;
+import com.HaneiIslim.ProductsAndCatogories.models.Product;
+import com.HaneiIslim.ProductsAndCatogories.services.CategoryService;
+import com.HaneiIslim.ProductsAndCatogories.services.ProductService;
+
+@Controller
+public class ProductController {
+	
+	private final ProductService productService;
+	private final CategoryService categoryService;
+	
+	public ProductController(ProductService productService,CategoryService categoryService) {
+		this.productService=productService;
+		this.categoryService=categoryService;
+	}
+	
+	@GetMapping("/products/new")
+	public String index(@ModelAttribute("product") Product p) {
+		
+		return "Product.jsp";
+	}
+	
+	@PostMapping("/products/new")
+	public String createProduct(@ModelAttribute("product") Product p) {
+		productService.createProduct(p);
+		
+		return "redirect:/products/new";
+	}
+	
+	@GetMapping("/products/{id}")
+	public String showProduct(@PathVariable("id") Long id, Model model) {
+		
+		Product Product= productService.getProduct(id);
+		List<Category> includedCategories= categoryService.getAllCategoriesInThisProduct(Product);
+		List<Category> notIncludedCategories=categoryService.getAllCategoriesNotInThisProduct(Product);
+		
+		model.addAttribute("Product", Product);
+		model.addAttribute("Categories", includedCategories);
+		model.addAttribute("Categories", notIncludedCategories);
+		
+		for (Category category : includedCategories) {
+			System.out.println(category.getName());
+		}
+
+		for (Category category : notIncludedCategories) {
+			System.out.println(category.getName());
+		}
+	
+		return "product.jsp";
+	}
+	
+	@PostMapping("/products/addCategory/{id}")
+	public String addCategory(@RequestParam("c") Long c ,@PathVariable("id")Long id) {
+		
+		Product product= productService.getProduct(id);
+		List<Category>categories=product.getCategories();
+		Category category= categoryService.getCategory(c);
+		categories.add(category);
+		product.setCategories(categories);
+		productService.updateProduct(product);
+		
+		return"redirect:/";
+	}
+//	@RequestParam("title") String title,
+}

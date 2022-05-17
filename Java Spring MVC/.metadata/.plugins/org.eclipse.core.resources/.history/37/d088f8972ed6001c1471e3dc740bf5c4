@@ -1,0 +1,74 @@
+package com.HaneiIslim.ProductsAndCatogories.controllers;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.HaneiIslim.ProductsAndCatogories.models.Category;
+import com.HaneiIslim.ProductsAndCatogories.models.Product;
+import com.HaneiIslim.ProductsAndCatogories.services.CategoryService;
+import com.HaneiIslim.ProductsAndCatogories.services.ProductService;
+
+@Controller
+public class ProductController {
+	
+	private final ProductService productService;
+	private final CategoryService categoryService;
+	
+	public ProductController(ProductService productService,CategoryService categoryService) {
+		this.productService=productService;
+		this.categoryService=categoryService;
+	}
+	
+	@GetMapping("/products/new")
+	public String index(@ModelAttribute("product") Product p) {
+		
+		return "Product.jsp";
+	}
+	
+	@PostMapping("/products/new")
+	public String createProduct(@ModelAttribute("product") Product p) {
+		productService.createProduct(p);
+		
+		return "redirect:/products/new";
+	}
+	
+	@GetMapping("/products/{id}")
+	public String showProduct(@PathVariable("id")Long id,Model model) {
+		
+		Product product= productService.findProduct(id);
+		model.addAttribute("product", product);
+		List<Category> BelongCategories= this.categoryService.findAllCategoriesBelongToThisProduct(product);
+		model.addAttribute("BelongCategories", BelongCategories);
+		for (Category category : BelongCategories) {
+			System.out.println(category.getName());
+		}
+
+		List<Category> notBelongCategories=this.categoryService.findAllCategoriesNotBelongToThisProduct(product);
+		for (Category category : notBelongCategories) {
+			System.out.println(category.getName());
+		}
+		System.out.println("=======================");
+		model.addAttribute("notBelongCategories", notBelongCategories);
+
+		return "product.jsp";
+	}
+	@PostMapping("/products/addCategory/{id}")
+	public String addCategory(@RequestParam("c") Long c ,@PathVariable("id")Long id) {
+		Product product= productService.findProduct(id);
+		List<Category>categories=product.getCategories();
+		Category category= this.categoryService.findCategory(c);
+		categories.add(category);
+		product.setCategories(categories);
+		productService.updateProduct(product);
+		
+		return"redirect:/";
+	}
+//	@RequestParam("title") String title,
+}

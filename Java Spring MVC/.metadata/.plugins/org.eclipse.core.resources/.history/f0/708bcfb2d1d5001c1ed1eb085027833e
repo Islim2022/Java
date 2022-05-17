@@ -1,0 +1,5 @@
+package com.HaneiIslim.login.models;
+
+public class User {
+
+}

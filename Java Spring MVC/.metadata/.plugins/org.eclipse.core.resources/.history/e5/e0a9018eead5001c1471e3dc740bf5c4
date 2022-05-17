@@ -1,0 +1,37 @@
+package com.HaneiIslim.ProductsAndCatogories.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.HaneiIslim.ProductsAndCatogories.models.Category;
+import com.HaneiIslim.ProductsAndCatogories.models.Product;
+import com.HaneiIslim.ProductsAndCatogories.repositories.CategoryRepository;
+
+@Service
+public class CategoryService {
+	
+	private final CategoryRepository categoryRepo;
+	public CategoryService(CategoryRepository categoryRepo) {
+		this.categoryRepo=categoryRepo;	
+	}
+	public List<Category> getAllCategories(){
+		return categoryRepo.findAll();
+	}
+	public Category createCategory(Category cate) {
+		return categoryRepo.save(cate);
+	}
+
+	public Category findCategory(Long id) {
+		Optional<Category> category= this.categoryRepo.findById(id);
+		return category.get()
+				;
+	}
+	public List<Category>findAllCategoriesBelongToThisProduct(Product product){
+		return this.categoryRepository.findAllByProducts(product);
+	}
+	public List<Category>findAllCategoriesNotBelongToThisProduct(Product product){
+		return this.categoryRepository.findByProductsNotContains(product);
+	}
+}
