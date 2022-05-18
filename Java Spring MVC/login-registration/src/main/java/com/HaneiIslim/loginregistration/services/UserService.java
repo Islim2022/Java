@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import com.HaneiIslim.loginregistration.models.LoginUser;
 import com.HaneiIslim.loginregistration.models.User;
@@ -18,14 +19,29 @@ public class UserService {
         this.userRepository = userRepo;
     }
     
-    public User registerUser(User user) {
-        String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(hashed);
-        return userRepository.save(user);
+    public User registerUser(User newUser, BindingResult result) {
+    	Optional<User> user = userRepository.findByEmail(newUser.getEmail());
+    	
+    	if (user.isPresent()) {
+    		User user2 = new User();
+    		ObjectError error = new ObjectError("Invalid Email.", "This email does already exist.");
+    		result.addError(error);
+    		return user2;
+    	
+    	} else {
+    		String hashed = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
+            newUser.setPassword(hashed);
+            return userRepository.save(newUser);
+    	}
     }
     
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    	Optional<User> user = userRepository.findByEmail(email);
+    	if(user.isPresent()) {
+            return user.get();
+    	} else {
+    	    return null;
+    	}
     }
     
     public User getUserById(Long id) {
@@ -37,18 +53,23 @@ public class UserService {
     	}
     }
  
-    public boolean login(LoginUser newLoginObject, BindingResult result) {
-        User user = userRepository.findByEmail(email);
-        if(user == null) {
-            return false;
-        }
-        else {
-            if(BCrypt.checkpw(password, user.getPassword())) {
-                return true;
+    public User loginUser(LoginUser newLoginObject, BindingResult result) {
+    	Optional<User> user = userRepository.findByEmail(newLoginObject.getEmail());
+        //
+        if(user.isPresent()) {
+        	User loggedUser = user.get();
+            if(BCrypt.checkpw(newLoginObject.getPassword(), loggedUser.getPassword())) {
+                
+            	result.rejectValue("password", "Matches", "Invalid Password.");;
+            	return new User();
+            } else {
+                return loggedUser;
             }
-            else {
-                return false;
+        } else {
+        	ObjectError error = new ObjectError("Invalid Email.", "This email does not exist.");
+        	result.addError(error);
+        	return new User();
             }
         }
-    }
 }
+

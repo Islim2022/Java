@@ -12,8 +12,11 @@
 <link rel="stylesheet" href="css/Style.css"/>
 </head>
 <body>
-<h1>Welcome, <c:out value="${currentUser.email}"></c:out></h1>
-<p>This is your dashboard. Nothing to see here yet.</p>
-<a href="/logout">Log out</a>
+<div class=container>
+	<h1>Welcome, <c:out value="${currentUser.userName}"></c:out></h1>
+	<p>This is your dash-board. Nothing to see here yet.</p>
+	<a href="/logout">Log out</a>
+</div>
+
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.HaneiIslim.ProductsAndCatogories.models.Category;
 import com.HaneiIslim.ProductsAndCatogories.models.Product;
 import com.HaneiIslim.ProductsAndCatogories.repositories.ProductRepository;
 
@@ -40,5 +41,15 @@ public class ProductService {
 	// Update a specific product
 	public Product updateProduct(Product p) {
 		return productRepo.save(p);
+	}
+	
+	// Retrieve all Categories, which belong to a specific product
+	public List<Product>getAllProductsInThisCategory(Category cate){
+		return productRepo.findAllByCategories(cate);
+	}
+	
+	// Retrieve all Categories, which do not belong to a specific product
+	public List<Product>getAllProductsNotInThisCategory(Category cate){
+		return productRepo.findByCategoriesNotContains(cate);
 	}
 }

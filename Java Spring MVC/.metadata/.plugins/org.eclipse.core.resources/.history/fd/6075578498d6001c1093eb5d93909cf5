@@ -1,0 +1,64 @@
+package com.HaneiIslim.loginregistration.services;
+
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+
+import com.HaneiIslim.loginregistration.models.LoginUser;
+import com.HaneiIslim.loginregistration.models.User;
+import com.HaneiIslim.loginregistration.repositories.UserRepository;
+
+@Service
+public class UserService {
+    private final UserRepository userRepository;
+    
+    public UserService(UserRepository userRepo) {
+        this.userRepository = userRepo;
+    }
+    
+    public User registerUser(User user, BindingResult result) {
+        String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashed);
+        return userRepository.save(user);
+    }
+    
+    public User getUserByEmail(String email) {
+    	Optional<User> user = userRepository.findByEmail(email);
+    	if(user.isPresent()) {
+            return user.get();
+    	} else {
+    	    return null;
+    	}
+    }
+    
+    public User getUserById(Long id) {
+    	Optional<User> user = userRepository.findById(id);
+    	if(user.isPresent()) {
+            return user.get();
+    	} else {
+    	    return null;
+    	}
+    }
+ 
+    public User login(LoginUser newLoginObject, BindingResult result) {
+    	Optional<User> user = userRepository.findByEmail(newLoginObject.getEmail());
+        //
+        if(user.isPresent()) {
+        	User loggedUser = user.get();
+            if(BCrypt.checkpw(newLoginObject.getPassword(), loggedUser.getPassword())) {
+                
+            	result.rejectValue("password", "Matches", "Invalid Password");;
+            	return new User();
+            } else {
+                return loggedUser;
+            }
+        } else {
+        	return new User();
+            }
+        }
+    }
+}

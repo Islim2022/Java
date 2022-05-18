@@ -21,7 +21,7 @@
 				    <div class="form-group">
 				    	<form:label path="userName">User Name</form:label>
 				        <form:errors path="userName"/>
-				        <form:input type="text" path="userNname"/>
+				        <form:input type="text" path="userName"/>
 				    </div>
 				    <div class="form-group">
 				    	<form:label path="email">Email</form:label>

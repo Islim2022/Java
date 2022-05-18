@@ -58,7 +58,7 @@ public class ProductController {
 			System.out.println(category.getName());
 		}
 	
-		return "products.jsp";
+		return "Products.jsp";
 	}
 	
 	@PostMapping("/products/addCategory/{id}")

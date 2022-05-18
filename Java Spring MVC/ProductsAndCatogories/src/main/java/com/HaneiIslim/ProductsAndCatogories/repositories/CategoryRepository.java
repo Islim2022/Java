@@ -11,6 +11,7 @@ import com.HaneiIslim.ProductsAndCatogories.models.Product;
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 	
 	public List<Category>findAll();
+	
 	// Retrieves a list of all categories for a particular product
     List<Category> findAllByProducts(Product product);
     

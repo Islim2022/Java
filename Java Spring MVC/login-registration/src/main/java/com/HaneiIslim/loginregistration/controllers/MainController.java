@@ -4,6 +4,7 @@ package com.HaneiIslim.loginregistration.controllers;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +20,8 @@ import com.HaneiIslim.loginregistration.services.UserService;
 public class MainController {
  
  // Add once service is implemented:
- // @Autowired
- // private UserService userServ;
+  @Autowired
+  private UserService userServ;
  
  @GetMapping("/")
  public String index(Model model, HttpSession session) {
@@ -37,10 +38,10 @@ public class MainController {
  @PostMapping("/register")
  public String register(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model, HttpSession session) {
      
-	 User registeredUser = userService.register(newUser, result);
+	 User registeredUser = userServ.registerUser(newUser, result);
      
      if(result.hasErrors()) {
-         model.addAttribute("newLogin", new LoginUser());
+       // model.addAttribute("newLogin", new LoginUser());
          return "Index.jsp";
      } else {
     	 session.setAttribute("userId", registeredUser.getId());
@@ -49,10 +50,9 @@ public class MainController {
  }
  
  @PostMapping("/login")
- public String login(@Valid @ModelAttribute("newLogin") LoginUser newLogin, 
-         BindingResult result, Model model, HttpSession session) {
+ public String loginUser(@Valid @ModelAttribute("newLogin") LoginUser newLogin, BindingResult result, Model model, HttpSession session) {
 
-     User user = UserService.loginUser(newLogin, result);
+     User user = userServ.loginUser(newLogin, result);
  
      if(result.hasErrors()) {
          model.addAttribute("newUser", new User());
@@ -63,10 +63,11 @@ public class MainController {
      }
  }
  @GetMapping("/home")
- public String Index(Model model, HttpSession session) {
+ public String home(HttpSession session, Model model) {
+	 // Getting the user from the session.
 	 if (session.getAttribute("userId") != null) {
 		 Long userId = (Long) session.getAttribute("userId");
-		 User currentUser = UserService.getUserById(userId);
+		 User currentUser = userServ.getUserById(userId);
 		 model.addAttribute("currentUser", currentUser);
 		 return "Home.jsp";
 	 } else {
