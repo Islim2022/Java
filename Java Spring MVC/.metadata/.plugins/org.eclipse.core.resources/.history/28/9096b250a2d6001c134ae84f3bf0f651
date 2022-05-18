@@ -1,0 +1,36 @@
+package com.HaneiIslim.BookClub.services;
+
+import java.util.List;
+import java.util.Locale.Category;
+import java.util.Optional;
+
+import com.HaneiIslim.BookClub.repositories.BookRepository;
+
+public class BookService {
+	
+	private final BookRepository bookRepo;
+	public BookService(BookRepository bookRepo) {
+		this.bookRepo = bookRepo;	
+	}
+	
+	// Retrieves all Categories
+	public List<Book> getAllBooks(){
+		return bookRepo.findAll();
+	}
+	
+	// Create a new Category
+	public Category createCategory(Category cate) {
+		return categoryRepo.save(cate);
+	}
+	
+	// Retrieve a Category by ID 
+	public Category getCategory(Long id) {
+		Optional<Category> category= categoryRepo.findById(id);
+		if(category.isPresent()) {
+			return category.get();
+		} else {
+			return null;
+		}
+	}
+
+}

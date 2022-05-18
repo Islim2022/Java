@@ -1,0 +1,21 @@
+package com.HaneiIslim.BookClub.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.HaneiIslim.BookClub.models.Book;
+import com.HaneiIslim.BookClub.services.BookService;
+
+public class BookController {
+	
+	  @Autowired
+	  private BookService bookServ;
+	  
+	  @GetMapping("/books/new")
+	  public String newBook(@ModelAttribute("book") Book book) {
+			
+		return "addProduct.jsp";
+	  }
+
+}
