@@ -1,5 +1,0 @@
-package com.HaneiIslim.EditExpenses.repositories;
-
-public class ExpenseRepository {
-
-}
