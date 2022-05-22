@@ -52,6 +52,10 @@ public class UserService {
     	    return null;
     	}
     }
+    
+    public User updateUser(User user) {
+    	return userRepository.save(user);
+    }
  
     public User loginUser(LoginUser newLoginObject, BindingResult result) {
     	Optional<User> user = userRepository.findByEmail(newLoginObject.getEmail());

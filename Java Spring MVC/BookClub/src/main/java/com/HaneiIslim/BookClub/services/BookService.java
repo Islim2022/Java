@@ -32,5 +32,30 @@ public class BookService {
 			return null;
 		}
 	}
+	
+	// Retrieve all books that are borrowed
+	public List<Book> getAllBookss(){
+		return bookRepo.findByBorrow(false);
+	}
+	
+    public Book updateBook(Book book) {
+    	Optional<Book> optionalBook = bookRepo.findById(book.getId());
+        if(optionalBook.isPresent()) {
+        	Book book2 = optionalBook.get();
+        	book2.setTitle(book2.getTitle());
+        	book2.setAuthor(book2.getAuthor());
+        	book2.setUserThought(book2.getUserThought());
+        	book2.setUserWhoBorrowed(book2.getUserWhoBorrowed());
+        	bookRepo.save(book2);
+            return book2;
+        } else {
+            return null;
+        }
+    }
+	
+	// Delete a book by id
+    public void deleteBook(Long id) {
+    	bookRepo.deleteById(id);
+    }
 
 }

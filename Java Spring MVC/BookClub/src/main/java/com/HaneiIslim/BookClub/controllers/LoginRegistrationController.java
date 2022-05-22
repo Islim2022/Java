@@ -41,7 +41,7 @@ public class LoginRegistrationController {
 	 User registeredUser = userServ.registerUser(newUser, result);
      
      if(result.hasErrors()) {
-       // model.addAttribute("newLogin", new LoginUser());
+         model.addAttribute("newLogin", new LoginUser());
          return "Home.jsp";
      } else {
     	 session.setAttribute("userId", registeredUser.getId());

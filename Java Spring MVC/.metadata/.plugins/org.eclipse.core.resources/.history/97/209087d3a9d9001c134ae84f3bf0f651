@@ -1,0 +1,55 @@
+package com.HaneiIslim.BookClub.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.HaneiIslim.BookClub.models.Book;
+import com.HaneiIslim.BookClub.repositories.BookRepository;
+
+public class BookService {
+	
+	private final BookRepository bookRepo;
+	public BookService(BookRepository bookRepo) {
+		this.bookRepo = bookRepo;	
+	}
+	
+	// Retrieves all books
+	public List<Book> getAllBooks(){
+		return bookRepo.findAll();
+	}
+	
+	// Create a new book
+	public Book createBook(Book book) {
+		return bookRepo.save(book);
+	}
+	
+	// Retrieve a book by ID 
+	public Book getBook(Long id) {
+		Optional<Book> book = bookRepo.findById(id);
+		if(book.isPresent()) {
+			return book.get();
+		} else {
+			return null;
+		}
+	}
+	
+    public Book updateBook(Book book) {
+    	Optional<Book> optionalBook = bookRepo.findById(book.getId());
+        if(optionalBook.isPresent()) {
+        	Book book = optionalBook.get();
+        	book.setName(book.getTitle());
+        	book.setCreator(book.getBorrow());
+        	book.setVersion(book.getBorrowUser());
+        	bookRepo.save(book);
+            return book;
+        } else {
+            return null;
+        }
+    }
+	
+	// Delete a book by id
+    public void deleteLanguage(Long id) {
+    	bookRepo.deleteById(id);
+    }
+
+}

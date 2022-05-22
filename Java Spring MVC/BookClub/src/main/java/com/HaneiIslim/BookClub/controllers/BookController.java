@@ -40,6 +40,29 @@ public class BookController {
 	 	 }
 	  }
 	  
+	  @GetMapping("/bookmarket")
+	  public String bookmarket(HttpSession session, Model model) {
+	 	 // Getting the user from the session.
+	 		 Long userId = (Long) session.getAttribute("userId");
+	 		 User user = new User();
+	 		 User currentUser = userServ.getUserById(userId);
+	 		 List<Book>borrowedBooks=user.getBorrowedBooks();
+	 		 List<Book>availableBooks=bookServ.getAllBookss();
+	 		 
+	 		 for (Book book : borrowedBooks) {
+	 			  System.out.println(book.getTitle());
+	 		 }
+	 		 for (Book book : availableBooks) {
+	 			  System.out.println(book.getTitle());
+	 		 }
+	 		 model.addAttribute("currentUser", currentUser);
+	 		 model.addAttribute("barrowedBooks", borrowedBooks);
+	 		 model.addAttribute("availableBooks", availableBooks);
+	 
+	 		 return "BookMarket.jsp";
+	 	 } 
+	  
+	  
 	  @GetMapping("/books/new")
 	  public String newBook(@ModelAttribute("book") Book book, Model model, HttpSession session) {
 		Book book1 = new Book();
@@ -80,7 +103,7 @@ public class BookController {
 			return "ViewBook.jsp";
 		}
 		
-		 @GetMapping("/books/editt/{id}")
+		 @GetMapping("/books/edit/{id}")
 		 public String EditBook(@PathVariable("id") Long id, @ModelAttribute("book") Book book, HttpSession session, Model model) {
 		    	Book bookEdit = bookServ.getBook(id);
 		    	
@@ -103,5 +126,53 @@ public class BookController {
 			 
 			 return "redirect:/books";
 		 }
+		 
+		 @GetMapping("/borrows/{id}")
+		 public String borrowBook(@PathVariable("id") Long id, HttpSession session) {
+		 	
+			User user= (User) session.getAttribute("user");
+	 		// Long userId = (Long) session.getAttribute("userId");
+	 		// User currentUser = userServ.getUserById(userId);
+		 	Book Book = bookServ.getBook(id);
+
+		 	Book.setBorrow(true);
+		 	Book.setUserWhoBorrowed(user);
+		 	Book = bookServ.updateBook(Book);
+		 	user.getBorrowedBooks().add(Book);
+
+		 	user = userServ.updateUser(user);	
+
+		 	return "redirect:/bookmarket";
+		 }
+		 
+		 @GetMapping("/return/{id}")
+		 public String returnBook(@PathVariable("id") Long id, HttpSession session) {
+			
+			Book Book = bookServ.getBook(id);
+		 	Book.setBorrow(false);
+		 	Book.setUserWhoBorrowed(null);
+		 	
+		 	
+
+		 	User user= (User) session.getAttribute("user");
+	 		// Long userId = (Long) session.getAttribute("userId");
+	 		
+		 	List<Book> Books = user.getBorrowedBooks();
+
+		 	for(int b=0; b < Books.size(); b++) {
+		 	if (Books.get(b).getTitle().equals(Book.getTitle()))	{
+		 		Books.remove(b);
+		 	}
+		 	}
+		 	user.setBorrowedBooks(Books);
+		 	user = userServ.updateUser(user);
+		 	return "redirect:/bookmarket";
+		 }
+		 
+		    @GetMapping("/books/delete/{id}")
+		    public String delete(@PathVariable("id") Long id) {
+		    	bookServ.deleteBook(id);
+		    	return "redirect:/books";
+		    }
 
 }

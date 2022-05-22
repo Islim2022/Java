@@ -11,4 +11,6 @@ import com.HaneiIslim.BookClub.models.Book;
 public interface BookRepository extends CrudRepository<Book, Long> {
 
 	public List<Book>findAll();
+	// find the books that are borrowed by the user
+	public List<Book>findByBorrow(boolean isBorrow);
 }

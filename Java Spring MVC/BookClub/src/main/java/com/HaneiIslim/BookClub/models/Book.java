@@ -24,28 +24,34 @@ public class Book {
     private String title;
     
     @NotNull(message="Author is required!")
-    @Size(min=10, max=100, message="you must do your thought")
-    private String userThought;
-    
-    @NotNull(message="Author is required!")
     @Size(min=3, max=30, message="Author name must be between 3 and 30 characters")
     private String author;
+    
+    @NotNull(message="Author is required!")
+    @Size(min=10, max=100, message="you must do your thought")
+    private String userThought;
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="borrowed_user_id")
+    private User userWhoBorrowed;
+	private boolean borrow;
 	
 	// Constructors
 	public Book() {
 		
 		
 	}
-	public Book(Long id, String title, String userThought, String author, User user) {
+	public Book(Long id, String title, String userThought, String author, User user, User userWhoBorrowed) {
 		this.id = id;
 		this.title = title;
 		this.userThought = userThought;
 		this.author = author;
 		this.user = user;
+		this.userWhoBorrowed = userWhoBorrowed;
 	}
 
 	// Getters and Setters
@@ -57,6 +63,24 @@ public class Book {
 		this.id = id;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public User getUserWhoBorrowed() {
+		return userWhoBorrowed;
+	}
+	public void setUserWhoBorrowed(User userWhoBorrowed) {
+		this.userWhoBorrowed = userWhoBorrowed;
+	}
 	public String getUserThought() {
 		return userThought;
 	}
@@ -72,6 +96,13 @@ public class Book {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public boolean isBorrow() {
+		return borrow;
+	}
+	public void setBorrow(boolean borrow) {
+		this.borrow = borrow;
+	}
+	
 }
 	
 	
